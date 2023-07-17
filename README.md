@@ -1,2 +1,2 @@
 # amgular-consume-api
-An ANgular Comsuming API demo
+An Angular Comsuming API demo
