@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { User } from '../interface/user';
+import { Info } from '../interface/info';
+import { Response } from '../interface/response';
 
 @Injectable({
   providedIn: 'root'
@@ -13,15 +15,19 @@ export class UserService {
 
   //Fetch users
   getUsers(size: number = 10): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/?results=${size}`)
+    return this.http.get<any>(`${this.apiUrl}/?results=${size}`).pipe(
+      map(response => this.processResponse(response))
+    )
   }
 
   //Fetch one user by id
   getUser(uuid: number = 10): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/?uuid=${uuid}`)
+    return this.http.get<any>(`${this.apiUrl}/?uuid=${uuid}`).pipe(
+      map(response => this.processResponse(response))
+    )
   }
 
-  private processResponse(response: Response ): Response {
+  private processResponse(response: any ): Response {
     return {
       info: {...response.info },
       result: response.results.map((user: any) => (<User>{
