@@ -30,7 +30,7 @@ export class UserService {
   private processResponse(response: any ): Response {
     return {
       info: {...response.info },
-      result: response.results.map((user: any) => (<User>{
+      result: response.results.map((user: any) => ({
         uuid: user.login.uuid,
         firstname: user.name.first,
         lastname: user.name.last,
