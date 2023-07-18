@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { User } from '../interface/user';
 
 @Injectable({
   providedIn: 'root'
@@ -20,4 +21,22 @@ export class UserService {
     return this.http.get<any>(`${this.apiUrl}/?uuid=${uuid}`)
   }
 
+  private processResponse(response: Response ): Response {
+    return {
+      info: {...response.info },
+      result: response.results.map((user: any) => (<User>{
+        uuid: user.login.uuid,
+        firstname: user.name.first,
+        lastname: user.name.last,
+        email: user.email,
+        username: user.login.username,
+        gender: user.gender,
+        address: `${user.location.street.number} ${user.location.street.name} ${user.location.city} ${user.location.street.country}`,
+        dateOfBirth: user.dob.date,
+        phone: user.phone,
+        imgUrl: user.picture.medium,
+        coordinate: {latitude: +user.location.coordinates.latitude, longitude: +user.location.coordinates.longitude}
+      }))
+    }
+  }
 }
