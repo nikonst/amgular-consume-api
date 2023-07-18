@@ -1,4 +1,5 @@
-import {Coordinate} from './coordinate.interface.ts'
+import { Coordinate } from "./coordinate";
+
 export interface User {
     uuid: string,
     firstname: string,
@@ -11,5 +12,4 @@ export interface User {
     phone: string,
     imgUrl: string,
     coordinate: Coordinate
-
 }
