@@ -21,7 +21,7 @@ export class UserService {
   }
 
   //Fetch one user by id
-  getUser(uuid: number = 10): Observable<any> {
+  getUser(uuid: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/?uuid=${uuid}`).pipe(
       map(response => this.processResponse(response))
     )

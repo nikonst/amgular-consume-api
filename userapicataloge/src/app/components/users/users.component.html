@@ -22,13 +22,13 @@
     </thead>
     <tbody>
         <tr *ngFor="let user of response?.result; let i = index">
-            <td>{{user.uuid}}</td>
-            <td><img [src]="user.imgUrl" alt="user" /></td>
+            <td>{{user.uuid.substr(0,4)}}</td>
+            <td><img [src]="user.imgUrl" class="rounded" alt="user" /></td>
             <td>{{user.firstname}} {{user.lastname}}</td>
             <td>{{user.email}}</td>
             <td>{{user.address}}</td>
             <td>{{user.phone}}</td>
-            <td><button [routerLink]="['/user', user.uuid]" type="button" class="button btn btn-primary">View</button>
+            <td><button [routerLink]="['/userdetails', user.uuid]" type="button" class="button btn btn-primary">View</button>
             </td>
         </tr>
     </tbody>
