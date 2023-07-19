@@ -3,6 +3,8 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { Response } from 'src/app/interface/response';
 import { User } from 'src/app/interface/user';
+import { Coordinate } from 'src/app/interface/coordinate';
+//import * as Leaflet from 'leaflet';
 
 @Component({
   selector: 'app-userdetails',
@@ -12,7 +14,6 @@ import { User } from 'src/app/interface/user';
 export class UserdetailsComponent {
 
   response: Response
-
   user: User;
   mode: 'edit' | 'locked' = 'locked';
   buttonText: 'Save Changes' | 'Edit' = 'Edit';
@@ -23,14 +24,18 @@ export class UserdetailsComponent {
   }
 
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
-      console.log(params.get('uuid')!)
-      this.userService.getUser(params.get('uuid')!).subscribe(
-        (response: any) => {
-          console.log(response)
-        }
-      )
-    })
+    this.user = (<User>(this.activatedRoute.snapshot.data['resolvedResponse'].result[0]));
+    console.log("USER->", this.user);
+
+    // this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
+    //   console.log(params.get('uuid')!)
+    //   this.userService.getUser(params.get('uuid')!).subscribe(
+    //     (response: any) => {
+    //       console.log(response)
+    //       this.user = response.result[0]
+    //     }
+    //   )
+    // })
   }
 
   changeMode(mode?: 'edit' | 'locked'): void {
@@ -42,4 +47,22 @@ export class UserdetailsComponent {
       console.log('Updating using on the back end');
     }
   }
+
+  // private loadMap(coordinate: Coordinate): void {
+  //   const map = Leaflet.map('map', {
+  //     center: [coordinate.latitude, coordinate.longitude],
+  //     zoom: 8
+  //   });
+  //   const mainLayer = Leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  //     tileSize: 512,
+  //     zoomOffset: -1,
+  //     minZoom: 1,
+  //     maxZoom:30,
+  //     crossOrigin: true,
+  //     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  //   });
+  //   mainLayer.addTo(map);
+  //   const marker = Leaflet.marker([coordinate.latitude, coordinate.longitude], { icon: this.marker });
+  //   marker.addTo(map).bindPopup(`${this.user.firstname}'s Location`).openPopup();
+  // }
 }
