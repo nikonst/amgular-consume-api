@@ -16,8 +16,9 @@ export class UsersComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getUsers().subscribe( (result: any) => {
-      console.log(result)
+      //console.log(result)
       this.response = result
+      console.log(this.response)
     } )
   }
 }
